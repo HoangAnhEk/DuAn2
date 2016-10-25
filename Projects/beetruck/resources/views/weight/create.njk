@@ -1,0 +1,35 @@
+{% extends 'weight.index' %}
+
+{% block form %}
+
+<div class="box box-primary">
+    <div class="box-header with-border">
+        <h3 class="box-title">Thêm trọng tải</h3>
+    </div>
+    {{ form.open({ action: 'WeightController.store' }) }}
+    {{ csrfField }}
+    <div class="box-body">
+        <div class="form-group {{ 'has-error' if (_.find(old('errors'), { field: 'weight' })) else '' }}">
+            {{ form.label('weight', 'Khối lượng') }}
+            {{ form.text('weight', old('weight'), { class: 'form-control' }) }}
+            <span class="help-block">{{ _.find(old('errors'), { field: 'weight' }).message }}</span>
+        </div>
+        <div class="form-group {{ 'has-error' if (_.find(old('errors'), { field: 'description' })) else '' }}">
+            {{ form.label('description', 'Mô tả') }}
+            {{ form.textarea('description', old('description'), { class: 'form-control' }) }}
+            <span class="help-block">{{ _.find(old('errors'), { field: 'description' }).message }}</span>
+        </div>
+        <div class="form-group no-margin {{ 'has-error' if (_.find(old('errors'), { field: 'order' })) else '' }}">
+            {{ form.label('order', 'Thứ tự') }}
+            {{ form.text('order', old('order'), { class: 'form-control', type: 'number' }) }}
+            <span class="help-block">{{ _.find(old('errors'), { field: 'order' }).message }}</span>
+        </div>
+    </div>
+    <div class="box-footer">
+        {{ form.resetButton('Làm lại', 'reset', { class: 'btn btn-default btn-flat' }) }}
+        {{ form.submit('Cập nhật', 'submit', { class: 'btn btn-primary btn-flat pull-right' }) }}
+    </div>
+    {{ form.close() }}
+</div>
+
+{% endblock %}

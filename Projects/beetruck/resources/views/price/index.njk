@@ -1,0 +1,64 @@
+{% extends 'layouts.default' %}
+
+{% block content %}
+
+<section class="content-header">
+	<h1>
+		Bảng giá
+	</h1>
+	<ol class="breadcrumb">
+		<li>
+            {{ linkToAction('HomeController.index', 'Bảng điều khiển') }}
+        </li>
+		<li class="active">
+            Bảng giá
+        </li>
+	</ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-4">
+            {% block form %}
+			{% endblock %}
+        </div>
+        <div class="col-md-8">
+            <div class="box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Bảng giá</h3>
+                </div>
+                <div class="box-body table-responsive">
+                    <table class="table table-bordered">
+                        <tr>
+                            <th style="width: 40px">ID</th>
+                            <th>Trọng tải</th>
+                            {% for level in levels %}
+                            <th class="col-md-2">{{ level.name }}</th>
+                            {% endfor %}
+                            <th></th>
+                        </tr>
+                        {% for price in prices %}
+                        <tr>
+                            <td>{{ price.id }}</td>
+                            <td>{{ price.weight.weight }}</td>
+                            {% for level in price.levels %}
+                            <td>{{ level._pivot_price }}</td>
+                            {% endfor %}
+                            <td class="text-center">
+                                <a href="{{ 'PriceController.edit' | action({ id: price.id }) }}" role="button">Chỉnh Sửa</a>
+                                &middot;
+                                {{ form.open({ action: 'PriceController.destroy', params: { id: price.id }, class: 'table-row-delete' }) }}
+                                    {{ csrfField }}
+                                    {{ form.submit('Xóa', 'submit', { class: 'btn btn-link' }) }}
+                                {{ form.close() }}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

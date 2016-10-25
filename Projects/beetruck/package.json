@@ -1,0 +1,13 @@
+{
+	"name": "bee-truck",
+	"description": "",
+	"version": "1.0.1",
+	"author": "Toan <toandev@outlook.com.vn>",
+	"main": "server.js",
+	"scripts": {
+		"start": "node server.js"
+	},
+	"autoload": {
+		"App": "./app"
+	}
+}

@@ -1,0 +1,62 @@
+{% extends 'layouts.default' %}
+
+{% block content %}
+
+<section class="content-header">
+	<h1>
+		Lịch sử nạp
+	</h1>
+	<ol class="breadcrumb">
+		<li>
+            {{ linkToAction('HomeController.index', 'Bảng điều khiển') }}
+        </li>
+        <li class="active">
+            Lịch sử nạp
+        </li>
+	</ol>
+</section>
+
+<section class="content">
+    <div class="box">
+        <div class="box-header with-border">
+            <h3 class="box-title">Bảng giá</h3>
+        </div>
+        <div class="box-body">
+            <table id="dataTables" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th style="width: 40px">ID</th>
+                        <th>Số xu</th>
+                        <th>Tài xế được nạp</th>
+                        <th>Nạp bởi</th>
+                        <th>Nạp lúc</th>
+                        <th class="no-sort"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for coin in coins %}
+                    <tr>
+                        <td>{{ coin.id }}</td>
+                        <td>{{ coin.coin }}</td>
+                        <td>{{ coin.driver.first_name }}</td>
+                        <td>{{ coin.manager.first_name }}</td>
+                        <td>{{ moment(coin.created_at).format('llll') }}</td>
+                        <td class="text-center">
+                            <a href="{{ 'CoinController.show' | action({ id: coin.id }) }}" role="button">Xem</a>
+                            {% if currentUser.administrator %}
+                            &middot;
+                            {{ form.open({ action: 'CoinController.destroy', params: { id: coin.id }, class: 'table-row-delete' }) }}
+                                {{ csrfField }}
+                                {{ form.submit('Xóa', 'submit', { class: 'btn btn-link' }) }}
+                            {{ form.close() }}
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

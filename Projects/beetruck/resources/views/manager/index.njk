@@ -1,0 +1,70 @@
+{% extends 'layouts.default' %}
+
+{% block content %}
+
+<section class="content-header">
+	<h1>
+		Danh sách nhân viên
+	</h1>
+	<ol class="breadcrumb">
+		<li>
+            {{ linkToAction('HomeController.index', 'Bảng điều khiển') }}
+        </li>
+		<li class="active">
+            Nhân viên
+        </li>
+	</ol>
+</section>
+
+<section class="content">
+    <div class="box">
+        <div class="box-header with-border">
+            <h3 class="box-title">Danh sách nhân viên</h3>
+        </div>
+        <div class="box-body">
+            <table id="dataTables" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th># Mã</th>
+                        <th>Họ & tên</th>
+                        <th>Sô điện thoại</th>
+                        <th>Chức vụ</th>
+                        <th>Trạng thái</th>
+                        <th class="no-sort"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for manager in managers %}
+                    <tr>
+                        <td>{{ manager.id }}.</td>
+                        <td>{{ manager.last_name + ' ' + manager.first_name }}</td>
+                        <td>{{ manager.phone }}</td>
+                        <td>{{ manager.office.name }}</td>
+                        <td>
+                            {% if not manager.administrator %}
+                            <a href="{{ 'ManagerController.state' | action({ id: manager.id }) }}" data-toggle="tooltip" title="Nhấn để {{ ('Kích hoạt' if not manager.active else 'Vô hiệu') }}">
+                                {{ ('<span class="label label-primary">Kích hoạt</span>' if manager.active else '<span class="label label-default">Vô hiệu<span>') | safe }}
+                            </a>
+                            {% else %}
+                            <span class="label label-danger">Quản trị</span>
+                            {% endif %}
+                        </td>
+                        <td class="text-center">
+                            {% if not manager.administrator %}
+                            <a href="{{ 'ManagerController.edit' | action({ id: manager.id }) }}" role="button">Chỉnh Sửa</a>
+                            &middot;
+                            {{ form.open({ action: 'ManagerController.destroy', params: { id: manager.id }, class: 'table-row-delete' }) }}
+                                {{ csrfField }}
+                                {{ form.submit('Xóa', 'submit', { class: 'btn btn-link' }) }}
+                            {{ form.close() }}
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

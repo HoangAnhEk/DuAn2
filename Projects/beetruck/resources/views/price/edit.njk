@@ -1,0 +1,38 @@
+{% extends 'price.index' %}
+
+{% block form %}
+
+<div class="box box-primary">
+    <div class="box-header with-border">
+        <h3 class="box-title">Sửa loại giá: #{{ price.id }}</h3>
+    </div>
+    {{ form.open({ action: 'PriceController.update', params: { id: price.id } }) }}
+    {{ csrfField }}
+    <div class="box-body">
+        {% if old('success') %}
+        <div class="alert alert-success">
+            Cập nhật thành công!
+        </div>
+        {% endif %}
+        <div class="form-group {{ 'has-error' if (_.find(old('errors'), { field: 'weight_id' })) else '' }}">
+            {{ form.label('weight_id', 'Trọng tải xe') }}
+            {{ form.select('weight_id', Helpers.obj2select(weights, 'weight'), _.toString(price.weight_id), null, { class: 'form-control select2' }) }}
+            <span class="help-block" style="margin-bottom: 0;">{{ _.find(old('errors'), { field: 'weight_id' }).message }}</span>
+        </div>
+        {% for level in levels %}
+        <div class="form-group {{ 'no-margin' if (_.last(levels) == level) else '' }} {{ 'has-error' if (_.find(old('errors'), { field: 'level_values[' + loop.index0 + ']' })) else '' }}">
+            {{ form.label('level_' + level.id, level.name + ' (Giá theo VNĐ)') }}
+            {{ form.hidden('level_ids[' + loop.index0 + ']', level.id, { id: 'level_' + level.id }) }}
+            {{ form.text('level_values[' + loop.index0 + ']', price.levels[loop.index0]._pivot_price, { class: 'form-control', id: 'level_' + level.id }) }}
+            <span class="help-block" style="margin-bottom: 0;">{{ _.find(old('errors'), { field: 'level_values[' + loop.index0 + ']' }).message }}</span>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="box-footer">
+        {{ form.resetButton('Làm lại', 'reset', { class: 'btn btn-default btn-flat' }) }}
+        {{ form.submit('Cập nhật', 'submit', { class: 'btn btn-primary btn-flat pull-right' }) }}
+    </div>
+    {{ form.close() }}
+</div>
+
+{% endblock %}

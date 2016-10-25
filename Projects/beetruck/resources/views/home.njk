@@ -1,0 +1,168 @@
+{% extends 'layouts.default' %}
+
+{% block content %}
+
+<section class="content-header">
+	<h1>
+		Bảng điều khiển
+	</h1>
+	<ol class="breadcrumb">
+		<li class="active">
+            Bảng điều khiển
+        </li>
+	</ol>
+</section>
+
+<section class="content">
+
+	<div class="row">
+		<div class="col-md-8">
+			<div class="box box-success">
+				<div class="box-header with-border">
+					<h3 class="box-title">Tài xế</h3>
+					<div class="box-tools pull-right">
+						<button type="button" class="btn btn-box-tool" data-widget="collapse">
+							<i class="fa fa-minus"></i>
+						</button>
+						<button type="button" class="btn btn-box-tool" data-widget="remove">
+							<i class="fa fa-times"></i>
+						</button>
+					</div>
+				</div>
+				<div class="box-body no-padding">
+					<div class="row">
+						<div class="col-md-9 col-sm-8">
+							<div class="pad">
+								<div id="world-map-markers" style="height: 340px;"></div>
+							</div>
+						</div>
+						<div class="col-md-3 col-sm-4">
+							<div class="pad box-pane-right bg-green" style="min-height: 360px">
+								<div class="description-block margin-bottom">
+									<h5 class="description-header">0</h5>
+									<span class="description-text">Đang trực tuyến</span>
+								</div>
+								<div class="description-block margin-bottom">
+									<h5 class="description-header">0</h5>
+									<span class="description-text">Ngoại tuyến</span>
+								</div>
+								<div class="description-block">
+									<h5 class="description-header">0</h5>
+									<span class="description-text">Chưa kích hoạt</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div class="info-box bg-yellow">
+				<span class="info-box-icon"><i class="fa fa-file-text-o"></i></span>
+				<div class="info-box-content">
+					<span class="info-box-text">Vận đơn đã hoàn thành</span>
+					<span class="info-box-number">0</span>
+					<div class="progress">
+						<div class="progress-bar" style="width: 0%"></div>
+					</div>
+					<span class="progress-description">0% trong số 0 vận đơn</span>
+				</div>
+			</div>
+			<div class="info-box bg-green">
+				<span class="info-box-icon"><i class="fa fa-truck"></i></span>
+				<div class="info-box-content">
+					<span class="info-box-text">Tài xế đã được kích hoạt</span>
+					<span class="info-box-number">0</span>
+
+					<div class="progress">
+						<div class="progress-bar" style="width: 0%"></div>
+					</div>
+					<span class="progress-description">0% trong số 0 tài xế</span>
+				</div>
+			</div>
+			<div class="info-box bg-red">
+				<span class="info-box-icon"><i class="fa fa-users"></i></span>
+				<div class="info-box-content">
+					<span class="info-box-text">Nhân viên đã được kích hoạt</span>
+					<span class="info-box-number">0</span>
+					<div class="progress">
+						<div class="progress-bar" style="width: 0%"></div>
+					</div>
+					<span class="progress-description">0% trong số 0 nhân viên</span>
+				</div>
+			</div>
+			<div class="info-box bg-aqua">
+				<span class="info-box-icon"><i class="fa fa-flag"></i></span>
+				<div class="info-box-content">
+					<span class="info-box-text">Báo cáo</span>
+					<span class="info-box-number">0</span>
+					<span class="progress-description">tổng số báo cáo</span>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-md-8">
+			<div class="box box-info">
+				<div class="box-header with-border">
+					<h3 class="box-title">Đơn hàng mới nhất</h3>
+					<div class="box-tools pull-right">
+						<button type="button" class="btn btn-box-tool" data-widget="collapse">
+							<i class="fa fa-minus"></i>
+						</button>
+						<button type="button" class="btn btn-box-tool" data-widget="remove">
+							<i class="fa fa-times"></i>
+						</button>
+					</div>
+				</div>
+				<div class="box-body">
+					<div class="table-responsive">
+						<table class="table no-margin">
+							<thead>
+								<tr>
+									<th>Mã</th>
+									<th>Khách hàng</th>
+									<th>Tải trọng</th>
+									<th>Khối lượng</th>
+									<th>Trạng thái</th>
+								</tr>
+							</thead>
+							<tbody>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="box-footer clearfix">
+					<a href="javascript:void(0)" class="btn btn-sm btn-info btn-flat pull-left">Thêm vận đơn</a>
+					<a href="javascript:void(0)" class="btn btn-sm btn-default btn-flat pull-right">Xem tất cả</a>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-md-4">
+			<div class="box box-danger">
+				<div class="box-header with-border">
+					<h3 class="box-title">Tài xế mới</h3>
+					<div class="box-tools pull-right">
+						<button type="button" class="btn btn-box-tool" data-widget="collapse">
+							<i class="fa fa-minus"></i>
+						</button>
+						<button type="button" class="btn btn-box-tool" data-widget="remove">
+							<i class="fa fa-times"></i>
+						</button>
+					</div>
+				</div>
+				<div class="box-body no-padding">
+					<ul class="users-list clearfix">
+					</ul>
+				</div>
+				<div class="box-footer text-center">
+					<a href="javascript:void(0)" class="uppercase">Xem tất cả</a>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+</section>
+
+{% endblock %}

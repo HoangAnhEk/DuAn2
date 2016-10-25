@@ -1,0 +1,68 @@
+{% extends 'layouts.default' %}
+
+{% block content %}
+
+<section class="content-header">
+	<h1>
+		Tài xế
+	</h1>
+	<ol class="breadcrumb">
+		<li>
+            {{ linkToAction('HomeController.index', 'Bảng điều khiển') }}
+        </li>
+        <li class="active">
+            Tài xế
+        </li>
+	</ol>
+</section>
+
+<section class="content">
+    <div class="box">
+        <div class="box-header with-border">
+            <h3 class="box-title">Danh sách tài xế</h3>
+        </div>
+        <div class="box-body">
+            <table id="dataTables" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th># Mã</th>
+                        <th>Họ & tên</th>
+                        <th>Sô điện thoại</th>
+                        <th>Trọng tải</th>
+                        <th>Xu</th>
+                        <th>Trạng thái</th>
+                        <th class="no-sort"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for driver in drivers %}
+                    <tr>
+                        <td>{{ driver.id }}.</td>
+                        <td>{{ driver.last_name + ' ' + driver.first_name }}</td>
+                        <td>{{ driver.phone }}</td>
+                        <td>{{ driver.weight.weight }}</td>
+                        <td>{{ Helpers.numformat(driver.coin) }}</td>
+                        <td>
+                            <a href="{{ 'DriverController.state' | action({ id: driver.id }) }}" data-toggle="tooltip" title="Nhấn để {{ ('Kích hoạt' if not driver.active else 'Vô hiệu') }}">
+                                {{ ('<span class="label label-primary">Kích hoạt</span>' if driver.active else '<span class="label label-default">Vô hiệu<span>') | safe }}
+                            </a>
+                        </td>
+                        <td class="text-center">
+                            <a href="{{ 'DriverController.coin' | action({ id: driver.id }) }}" role="button">Nạp xu</a>
+                            &middot;
+                            <a href="{{ 'DriverController.edit' | action({ id: driver.id }) }}" role="button">Chỉnh Sửa</a>
+                            &middot;
+                            {{ form.open({ action: 'DriverController.destroy', params: { id: driver.id }, class: 'table-row-delete' }) }}
+                                {{ csrfField }}
+                                {{ form.submit('Xóa', 'submit', { class: 'btn btn-link' }) }}
+                            {{ form.close() }}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

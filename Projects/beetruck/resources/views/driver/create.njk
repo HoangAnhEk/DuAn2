@@ -1,0 +1,107 @@
+{% extends 'layouts.default' %}
+
+{% block content %}
+
+<section class="content-header">
+	<h1>
+		Thêm tài xế
+	</h1>
+	<ol class="breadcrumb">
+		<li>
+            {{ linkToAction('HomeController.index', 'Bảng điều khiển') }}
+        </li>
+        <li>
+            {{ linkToAction('DriverController.index', 'Tài xế') }}
+        </li>
+		<li class="active">
+            Thêm tài xế
+        </li>
+	</ol>
+</section>
+
+<section class="content">
+    {{ form.open({ action: 'DriverController.store', class: 'row' }) }}
+        {{ csrfField }}
+        <div class="col-md-5">
+            <div class="box">
+                <div class="box-header with-border">
+                    <div class="box-title">Thông tin tài xế</div>
+                </div>
+                <div class="box-body">
+                    <div class="form-group {{ 'has-error' if (_.find(old('errors'), { field: 'last_name' }) or _.find(old('errors'), { field: 'first_name' })) else '' }}">
+                        {{ form.label('fullname', 'Họ & Tên') }}
+                        <div class="row">
+                            <div class="col-xs-6">
+                                {{ form.text('last_name', old('last_name'), { class: 'form-control', 'placeholder': 'Họ và tên đệm' }) }}
+                                <span class="help-block">{{ _.find(old('errors'), { field: 'last_name' }).message }}</span>
+                            </div>
+                            <div class="col-xs-6">
+                                {{ form.text('first_name', old('first_name'), { class: 'form-control', placeholder: 'Tên' }) }}
+                                <span class="help-block">{{ _.find(old('errors'), { field: 'first_name' }).message }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group {{ 'has-error' if (_.find(old('errors'), { field: 'birthday' })) else '' }}">
+                        {{ form.label('birthday', 'Ngày sinh') }}
+                        {{ form.date('birthday', old('birthday'), { class: 'form-control' }) }}
+                        <span class="help-block">{{ _.find(old('errors'), { field: 'birthday' }).message }}</span>
+                    </div>
+                    <div class="form-group {{ 'has-error' if (_.find(old('errors'), { field: 'address' })) else '' }}">
+                        {{ form.label('address', 'Địa chỉ') }}
+                        {{ form.textarea('address', old('address'), { class: 'form-control' }) }}
+                        <span class="help-block">{{ _.find(old('errors'), { field: 'address' }).message }}</span>
+                    </div>
+                    <div class="form-group {{ 'has-error' if (_.find(old('errors'), { field: 'identification' })) else '' }}">
+                        {{ form.label('identification', 'Chứng minh thư (CMND)') }}
+                        {{ form.text('identification', old('identification'), { class: 'form-control' }) }}
+                        <span class="help-block">{{ _.find(old('errors'), { field: 'identification' }).message }}</span>
+                    </div>
+                    <div class="form-group {{ 'has-error' if (_.find(old('errors'), { field: 'weight_id' })) else '' }}">
+                        {{ form.label('weight_id', 'Trọng tải') }}
+                        {{ form.select('weight_id', Helpers.obj2select(weights, 'weight'), old('weight_id'), 'Chọn trọng tải', { class: 'form-control select2' }) }}
+                        <span class="help-block" style="margin-bottom: 0;">{{ _.find(old('errors'), { field: 'weight_id' }).message }}</span>
+                    </div>
+                    <div class="form-group {{ 'has-error' if (_.find(old('errors'), { field: 'driving_license' })) else '' }}">
+                        {{ form.label('driving_license', 'Giấy phép lái xe') }}
+                        {{ form.text('driving_license', old('driving_license'), { class: 'form-control' }) }}
+                        <span class="help-block">{{ _.find(old('errors'), { field: 'driving_license' }).message }}</span>
+                    </div>
+                    <div class="form-group no-margin {{ 'has-error' if (_.find(old('errors'), { field: 'license_plate' })) else '' }}">
+                        {{ form.label('license_plate', 'Biển kiểm soát') }}
+                        {{ form.text('license_plate', old('license_plate'), { class: 'form-control' }) }}
+                        <span class="help-block">{{ _.find(old('errors'), { field: 'license_plate' }).message }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-5">
+            <div class="box">
+                <div class="box-header with-border">
+                    <div class="box-title">Thông tin đăng nhập</div>
+                </div>
+                <div class="box-body">
+                    <div class="help-block">
+                        <i class="fa fa-exclamation-triangle"></i>
+                        Thông tin dùng để <b>đăng nhập</b> vào hệ thống.
+                    </div>
+                    <div class="form-group {{ 'has-error' if (_.find(old('errors'), { field: 'phone' })) else '' }}">
+                        {{ form.label('phone', 'Số diện thoại') }}
+                        {{ form.text('phone', old('phone'), { class: 'form-control' }) }}
+                        <span class="help-block">{{ _.find(old('errors'), { field: 'phone' }).message }}</span>
+                    </div>
+                    <div class="form-group no-margin {{ 'has-error' if (_.find(old('errors'), { field: 'password' })) else '' }}">
+                        {{ form.label('password', 'Mật khẩu') }}
+                        {{ form.password('password', old('password'), { class: 'form-control' }) }}
+                        <span class="help-block">{{ _.find(old('errors'), { field: 'password' }).message }}</span>
+                    </div>
+                </div>
+                <div class="box-footer">
+                    {{ form.resetButton('Làm lại', null, { class: 'btn btn-flat btn-default' }) }}
+                    {{ form.submit('Xác nhận', 'create', { class: 'btn btn-flat btn-primary pull-right' }) }}
+                </div>
+            </div>
+        </div>
+    {{ form.close() }}
+</section>
+
+{% endblock %}

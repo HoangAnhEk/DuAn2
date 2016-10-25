@@ -1,0 +1,61 @@
+{% extends 'layouts.default' %}
+
+{% block content %}
+
+<section class="content-header">
+	<h1>
+		Thông tin lịch sử nạp #{{ coin.id }}
+	</h1>
+	<ol class="breadcrumb">
+		<li>
+            {{ linkToAction('HomeController.index', 'Bảng điều khiển') }}
+        </li>
+        <li>
+            {{ linkToAction('CoinController.index', 'Lịch sử nạp') }}
+        </li>
+        <li class="active">
+            Thông tin lịch sử nạp #{{ coin.id }}
+        </li>
+	</ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="box">
+                <div class="box-header with-border">
+                    <div class="box-title">Thông lịch sử nạp xu: #{{ coin.id }}</div>
+                </div>
+                <div class="box-body">
+                    <dl class="dl-horizontal no-margin" style="font-size: 16px">
+						<dt>Số xu</dt>
+						<dd>{{ coin.coin }}</dd>
+
+                        <dt>Mô tả</dt>
+						<dd>{{ coin.description }}</dd>
+
+                        <dt>Nạp lúc</dt>
+						<dd>{{ moment(coin.created_at).format('llll') }}%</dd>
+
+                        <hr style="margin: 10px 0" />
+                        {% if coin.driver %}
+                        <dt>Tài xế:</dt>
+						<dd>
+                            #{{ coin.driver.id }}
+                            -
+                            {{ coin.driver.last_name + ' ' + coin.driver.first_name }}
+                        </dd>
+                        {% endif %}
+                        <dt>Người nạp:</dt>
+						<dd>
+                            #{{ coin.manager.id }}
+                            -
+                            {{ coin.manager.last_name + ' ' + coin.manager.first_name }}
+                        </dd>
+					</dl>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

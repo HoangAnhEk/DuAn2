@@ -1,0 +1,74 @@
+{% extends 'layouts.default' %}
+
+{% block content %}
+
+<section class="content-header">
+	<h1>
+		Vận đơn
+	</h1>
+	<ol class="breadcrumb">
+		<li>
+            {{ linkToAction('HomeController.index', 'Bảng điều khiển') }}
+        </li>
+		<li class="active">
+            Vận đơn
+        </li>
+	</ol>
+</section>
+
+<section class="content">
+    <div class="box">
+        <div class="box-header with-border">
+            <h3 class="box-title">Danh sách vận đơn</h3>
+        </div>
+        <div class="box-body">
+            <table id="dataTables" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th># Mã</th>
+                        <th>Khách hàng</th>
+                        <th>Địa chỉ nhận</th>
+                        <th>Khối lượng</th>
+                        <th>Trọng tải</th>
+                        <th>Trạng thái</th>
+                        <th class="no-sort"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for order in orders %}
+                    <tr>
+                        <td>{{ order.id }}.</td>
+                        <td>{{ order.name }} ({{ order.phone }})</td>
+                        <td>{{ order.delivery_location }}</td>
+                        <td>{{ order.total_weight }}</td>
+                        <td>{{ order.weight.weight }}</td>
+                        <td>
+                            {% if order.status == 0 %}
+                                <span class="label label-warning">Đang chờ</span>
+                            {% elseif order.status == 1 %}
+                                <span class="label label-primary">Đã nhận</span>
+                            {% elseif order.status == 2 %}
+                                <span class="label label-success">Đã xong</span>
+                            {% endif %}
+                        </td>
+                        <td class="text-center">
+                            <a href="{{ 'OrderController.show' | action({ id: order.id }) }}" role="button">Xem</a>
+                            {% if order.status == 0 %}
+                            &middot;
+                            <a href="{{ 'OrderController.edit' | action({ id: order.id }) }}" role="button">Chỉnh Sửa</a>
+                            &middot;
+                            {{ form.open({ action: 'OrderController.destroy', params: { id: order.id }, class: 'table-row-delete' }) }}
+                                {{ csrfField }}
+                                {{ form.submit('Xóa', 'submit', { class: 'btn btn-link' }) }}
+                            {{ form.close() }}
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

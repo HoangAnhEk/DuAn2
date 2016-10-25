@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<title>{{ TeamName }}</title>
+	<base href="{{ 'HomeController.index' | action }}" />
+
+	<link rel="stylesheet" type="text/css" href="dist/css/style.css" />
+	{% block stylesheets %}
+	{% endblock %}
+</head>
+
+<body class="hold-transition login-page">
+
+	{% block content %}
+	{% endblock %}
+
+	<script src="dist/js/app.js"></script>
+	{% block scripts %}
+	{% endblock %}
+</body>
+
+</html>

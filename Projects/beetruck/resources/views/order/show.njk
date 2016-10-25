@@ -1,0 +1,98 @@
+{% extends 'layouts.default' %}
+
+{% block content %}
+
+<section class="content-header">
+	<h1>
+		Xem vận đơn
+	</h1>
+	<ol class="breadcrumb">
+		<li>
+            {{ linkToAction('HomeController.index', 'Bảng điều khiển') }}
+        </li>
+        <li>
+            {{ linkToAction('OrderController.index', 'Vận đơn') }}
+        </li>
+		<li class="active">
+            Xem vận đơn #{{ order.id }}
+        </li>
+	</ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="box">
+                <div class="box-header with-border">
+                    <div class="box-title">Thông tin vận đơn: #{{ order.id }}</div>
+                    <div class="box-tools pull-right" data-toggle="tooltip" title="Tạo vào lúc">
+                        <a role="button" class="btn btn-link">{{ moment(order.created_at).format('llll') }}</a>
+		            </div>
+                </div>
+                <div class="box-body">
+                    <dl class="dl-horizontal no-margin" style="font-size: 16px">
+						<dt>Tên khách hàng</dt>
+						<dd>{{ order.name }}</dd>
+
+                        <dt>Số điện thoại</dt>
+						<dd>{{ order.phone }}</dd>
+
+                        <hr style="margin: 10px 0" />
+
+                        <dt>Địa điểm gửi đi</dt>
+						<dd>{{ order.shipping_location }}</dd>
+
+                        <dt>Địa điểm nhận</dt>
+						<dd>{{ order.delivery_location }}</dd>
+
+                        <dt>Thời gian gửi</dt>
+						<dd>{{ order.time }}</dd>
+
+                        <dt>Tổng khối lượng</dt>
+						<dd>{{ order.total_weight }}</dd>
+
+                        <dt>Loại hàng hóa</dt>
+						<dd>{{ order.category.name }}</dd>
+
+                        <dt>Trọng tải</dt>
+						<dd>{{ order.weight.weight }}</dd>
+
+                        <hr style="margin: 10px 0" />
+
+                        <dt>Phí chấp nhận</dt>
+						<dd>{{ order.percent }}%</dd>
+
+                        <hr style="margin: 10px 0" />
+                        {% if order.driver %}
+                        <dt>Tài xế:</dt>
+						<dd>
+                            #{{ order.driver.id }}
+                            -
+                            {{ order.driver.last_name + ' ' + order.driver.first_name }}
+                        </dd>
+                        {% endif %}
+                        <dt>Người tạo:</dt>
+						<dd>
+                            #{{ order.manager.id }}
+                            -
+                            {{ order.manager.last_name + ' ' + order.manager.first_name }}
+                        </dd>
+					</dl>
+                </div>
+                {% if order.status == 0 %}
+                {{ form.open({ action: 'OrderController.destroy', params: { id: order.id }, class: "box-footer" }) }}
+                    {{ csrfField }}
+                    <a role="button" class="btn btn-flat btn-default" onclick="window.print()">
+                        <i class="fa fa-print"></i> In trang
+                    </a>
+                    {{ form.submit('Xóa', 'submit', { class: 'btn btn-danger btn-flat pull-right', style: 'margin-left: 10px' }) }}
+                    <a href="{{ 'OrderController.edit' | action({ id: order.id }) }}" role="button" class="btn pull-right btn-flat btn-default">
+                        Chỉnh Sửa
+                    </a>
+                {{ form.close() }}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

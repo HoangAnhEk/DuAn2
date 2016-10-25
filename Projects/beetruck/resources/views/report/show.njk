@@ -1,0 +1,76 @@
+{% extends 'layouts.default' %}
+
+{% block content %}
+
+<section class="content-header">
+	<h1>
+		Thông tin báo cáo
+	</h1>
+	<ol class="breadcrumb">
+		<li>
+            {{ linkToAction('HomeController.index', 'Bảng điều khiển') }}
+        </li>
+        <li>
+            {{ linkToAction('ReportController.index', 'Danh sách báo cáo') }}
+        </li>
+		<li class="active">
+            Thông tin báo cáo #{{ report.id }}
+        </li>
+	</ol>
+</section>
+
+<section class="content">
+	<div class="row">
+		<div class="col-md-7">
+			<div class="box">
+				<div class="box-header with-border">
+					<h3 class="box-title">#{{ report.id }} - {{ report.title }}</h3>
+                    <div class="box-tools pull-right" data-toggle="tooltip" title="Tạo vào lúc">
+                        <a role="button" class="btn btn-link">{{ moment(report.created_at).format('llll') }}</a>
+		            </div>
+				</div>
+				<div class="box-body">
+					<dl class="dl-horizontal no-margin" style="font-size: 16px">
+						<dt>Tiêu đề:</dt>
+						<dd>{{ report.title }}</dd>
+
+                        <dt>Nội dung:</dt>
+						<dd>{{ report.content }}</dd>
+                        <hr style="margin: 10px 0" />
+                        <dt>Tên khách hàng:</dt>
+						<dd>{{ report.customer_name }}</dd>
+
+                        <dt>Số điện thoại:</dt>
+						<dd>{{ report.customer_phone }}</dd>
+                        <hr style="margin: 10px 0" />
+                        <dt>Tài xế:</dt>
+						<dd>
+                            #{{ report.driver.id }}
+                            -
+                            {{ report.driver.last_name + ' ' + report.driver.first_name }}
+                        </dd>
+
+                        <dt>Người tạo:</dt>
+						<dd>
+                            #{{ report.manager.id }}
+                            -
+                            {{ report.manager.last_name + ' ' + report.manager.first_name }}
+                        </dd>
+					</dl>
+				</div>
+                {{ form.open({ action: 'ReportController.destroy', params: { id: report.id }, class: 'box-footer' }) }}
+                    {{ csrfField }}
+                    <a role="button" class="btn btn-flat btn-default" onclick="window.print()">
+                        <i class="fa fa-print"></i> In trang
+                    </a>
+                    {{ form.submit('Xóa', 'submit', { class: 'btn btn-danger btn-flat pull-right', style: 'margin-left: 10px' }) }}
+                    <a href="{{ 'ReportController.edit' | action({ id: report.id }) }}" role="button" class="btn btn-flat pull-right btn-default">
+                        Chỉnh Sửa
+                    </a>
+                {{ form.close() }}
+			</div>
+		</div>
+	</div>
+</section>
+
+{% endblock %}

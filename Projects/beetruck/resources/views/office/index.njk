@@ -1,0 +1,60 @@
+{% extends 'layouts.default' %}
+
+{% block content %}
+
+<section class="content-header">
+	<h1>
+		Chức vụ
+	</h1>
+	<ol class="breadcrumb">
+		<li>
+            {{ linkToAction('HomeController.index', 'Bảng điều khiển') }}
+        </li>
+		<li class="active">
+            Chức vụ
+        </li>
+	</ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-4">
+            {% block form %}
+			{% endblock %}
+        </div>
+        <div class="col-md-8">
+            <div class="box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Danh Sách</h3>
+                </div>
+                <div class="box-body table-responsive">
+                    <table class="table table-bordered">
+                        <tr>
+                            <th style="width: 40px">#</th>
+                            <th>Tên chức vụ</th>
+                            <th class="col-xs-6">Mô tả</th>
+                            <th></th>
+                        </tr>
+                        {% for office in offices %}
+                        <tr>
+                            <td>{{ office.order }}.</td>
+                            <td>{{ office.name }}</td>
+                            <td>{{ office.description if office.description else '...' }}</td>
+                            <td class="text-center">
+                                <a href="{{ 'OfficeController.edit' | action({ id: office.id }) }}" role="button">Chỉnh Sửa</a>
+                                &middot;
+                                {{ form.open({ action: 'OfficeController.destroy', params: { id: office.id }, class: 'table-row-delete' }) }}
+                                    {{ csrfField }}
+                                    {{ form.submit('Xóa', 'submit', { class: 'btn btn-link' }) }}
+                                {{ form.close() }}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

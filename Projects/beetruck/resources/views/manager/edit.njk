@@ -1,0 +1,118 @@
+{% extends 'layouts.default' %}
+
+{% block content %}
+
+<section class="content-header">
+	<h1>
+		Sửa nhân viên #{{ manager.id }}
+	</h1>
+	<ol class="breadcrumb">
+		<li>
+            {{ linkToAction('HomeController.index', 'Bảng điều khiển') }}
+        </li>
+        <li>
+            {{ linkToAction('ManagerController.index', 'Nhân viên') }}
+        </li>
+		<li class="active">
+            Sửa nhân viên #{{ manager.id }}
+        </li>
+	</ol>
+</section>
+
+<section class="content">
+    {% if old('success') %}
+    <div class="alert alert-success">
+        Cập nhật thành công thông tin của nhân viên #{{ manager.id }}!
+    </div>
+    {% endif %}
+    {{ form.open({ action: 'ManagerController.update', params: { id: manager.id }, class: 'row' }) }}
+        {{ csrfField }}
+        <div class="col-md-5">
+            <div class="box">
+                <div class="box-header with-border">
+                    <div class="box-title">Sửa thông tin nhân viên: #{{ manager.id }}</div>
+                </div>
+                <div class="box-body">
+                    <div class="form-group {{ 'has-error' if (_.find(old('errors'), { field: 'last_name' }) or _.find(old('errors'), { field: 'first_name' })) else '' }}">
+                        {{ form.label('fullname', 'Họ & Tên') }}
+                        <div class="row">
+                            <div class="col-xs-6">
+                                {{ form.text('last_name', manager.last_name, { class: 'form-control', 'placeholder': 'Họ và tên đệm' }) }}
+                                <span class="help-block">{{ _.find(old('errors'), { field: 'last_name' }).message }}</span>
+                            </div>
+                            <div class="col-xs-6">
+                                {{ form.text('first_name', manager.first_name, { class: 'form-control', placeholder: 'Tên' }) }}
+                                <span class="help-block">{{ _.find(old('errors'), { field: 'first_name' }).message }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group {{ 'has-error' if (_.find(old('errors'), { field: 'birthday' })) else '' }}">
+                        {{ form.label('birthday', 'Ngày sinh') }}
+                        {{ form.date('birthday', manager.birthday, { class: 'form-control' }) }}
+                        <span class="help-block">{{ _.find(old('errors'), { field: 'birthday' }).message }}</span>
+                    </div>
+                    <div class="form-group {{ 'has-error' if (_.find(old('errors'), { field: 'gender' })) else '' }}">
+                        {{ form.label('gender', 'Giới tính') }}
+                        {{ form.select('gender', { '0': 'Nam', '1': 'Nữ' }, manager.gender + '', 'Chọn giới tính', { class: 'form-control' }) }}
+                        <span class="help-block">{{ _.find(old('errors'), { field: 'gender' }).message }}</span>
+                    </div>
+                    <div class="form-group {{ 'has-error' if (_.find(old('errors'), { field: 'address' })) else '' }}">
+                        {{ form.label('address', 'Địa chỉ') }}
+                        {{ form.textarea('address', manager.address, { class: 'form-control' }) }}
+                        <span class="help-block">{{ _.find(old('errors'), { field: 'address' }).message }}</span>
+                    </div>
+                    <div class="form-group {{ 'has-error' if (_.find(old('errors'), { field: 'identification' })) else '' }}">
+                        {{ form.label('identification', 'Chứng minh thư (CMND)') }}
+                        {{ form.text('identification', manager.identification, { class: 'form-control' }) }}
+                        <span class="help-block">{{ _.find(old('errors'), { field: 'identification' }).message }}</span>
+                    </div>
+                    <div class="form-group no-margin {{ 'has-error' if (_.find(old('errors'), { field: 'office_id' })) else '' }}">
+                        {{ form.label('office_id', 'Chức vụ') }}
+                        {{ form.select('office_id', Helpers.obj2select(offices), _.toString(manager.office_id), null, { class: 'form-control select2' }) }}
+                        <span class="help-block" style="margin-bottom: 0;">{{ _.find(old('errors'), { field: 'office_id' }).message }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-5">
+            <div class="box">
+                <div class="box-header with-border">
+                    <div class="box-title">Sửa thông tin đăng nhập: : #{{ manager.id }}</div>
+                </div>
+                <div class="box-body">
+                    <div class="help-block">
+                        <i class="fa fa-exclamation-triangle"></i>
+                        Thông tin dùng để <b>đăng nhập</b> vào hệ thống.
+                    </div>
+                    <div class="form-group {{ 'has-error' if (_.find(old('errors'), { field: 'phone' })) else '' }}">
+                        {{ form.label('phone', 'Số diện thoại') }}
+                        {{ form.text('phone', manager.phone, { class: 'form-control', disabled: true }) }}
+                        <span class="help-block">{{ _.find(old('errors'), { field: 'phone' }).message }}</span>
+                    </div>
+                    <hr style="margin: 10px 0;" />
+                    <div class="help-block">
+                        <i class="fa fa-key"></i>
+                        Nhập nếu muốn đổi mật khẩu. Giữ nguyên nếu không muốn.
+                    </div>
+                    <div class="form-group no-margin {{ 'has-error' if (_.find(old('errors'), { field: 'newpassword' })) else '' }}">
+                        {{ form.label('newpassword', 'Mật khẩu') }}
+                        {{ form.password('newpassword', old('newpassword'), { class: 'form-control' }) }}
+                        <span class="help-block">{{ _.find(old('errors'), { field: 'newpassword' }).message }}</span>
+                    </div>
+                    {% if not manager.administrator %}
+                    <hr style="margin: 10px 0;" />
+                    <div class="form-group no-margin">
+                        {{ form.label('permissions', 'Quyền truy cập') }}
+                        {{ form.select('permissions[]', Helpers.obj2select(permissions), Helpers.obj2selected(manager.permissions), null, { multiple: true, id: 'multiselect' }) }}
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="box-footer">
+                    {{ form.resetButton('Làm lại', null, { class: 'btn btn-flat btn-default' }) }}
+                    {{ form.submit('Xác nhận', 'create', { class: 'btn btn-flat btn-primary pull-right' }) }}
+                </div>
+            </div>
+        </div>
+    {{ form.close() }}
+</section>
+{% endblock %}

@@ -1,0 +1,60 @@
+{% extends 'layouts.default' %}
+
+{% block content %}
+
+<section class="content-header">
+	<h1>
+		Trọng tải xe
+	</h1>
+	<ol class="breadcrumb">
+		<li>
+            {{ linkToAction('HomeController.index', 'Bảng điều khiển') }}
+        </li>
+		<li class="active">
+            Trọng tải xe
+        </li>
+	</ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-4">
+            {% block form %}
+			{% endblock %}
+        </div>
+        <div class="col-md-8">
+            <div class="box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Danh sách</h3>
+                </div>
+                <div class="box-body table-responsive">
+                    <table class="table table-bordered">
+                        <tr>
+                            <th style="width: 40px">#</th>
+                            <th>Khối lượng</th>
+                            <th class="col-xs-6">Mô tả</th>
+                            <th></th>
+                        </tr>
+                        {% for weight in weights %}
+                        <tr>
+                            <td>{{ weight.order }}.</td>
+                            <td>{{ weight.weight }}</td>
+                            <td>{{ weight.description if weight.description else '...' }}</td>
+                            <td class="text-center">
+                                <a href="{{ 'WeightController.edit' | action({ id: weight.id }) }}" role="button">Chỉnh Sửa</a>
+                                &middot;
+                                {{ form.open({ action: 'WeightController.destroy', params: { id: weight.id }, class: 'table-row-delete' }) }}
+                                    {{ csrfField }}
+                                    {{ form.submit('Xóa', 'submit', { class: 'btn btn-link' }) }}
+                                {{ form.close() }}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

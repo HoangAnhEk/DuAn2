@@ -1,0 +1,105 @@
+{% extends 'layouts.default' %}
+
+{% block content %}
+
+<section class="content-header">
+	<h1>
+		Sửa báo cáo
+	</h1>
+	<ol class="breadcrumb">
+		<li>
+            {{ linkToAction('HomeController.index', 'Bảng điều khiển') }}
+        </li>
+        <li>
+            {{ linkToAction('ReportController.index', 'Danh sách báo cáo') }}
+        </li>
+		<li class="active">
+            Sửa báo cáo #{{ report.id }}
+        </li>
+	</ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-5">
+            <div class="box">
+                <div class="box-header with-border">
+                    <div class="box-title">Sửa báo cáo: #{{ report.id }}</div>
+                </div>
+                {{ form.open({ action: 'ReportController.update', params: { id: report.id } }) }}
+                {{ csrfField }}
+                <div class="box-body">
+                    {% if old('success') %}
+                        <div class="alert alert-success">Cập nhật thành công</div>
+                    {% endif %}
+                    <div class="form-group {{ 'has-error' if (_.find(old('errors'), { field: 'title' })) else '' }}">
+                        {{ form.label('title', 'Tiêu đề') }}
+                        {{ form.date('title', report.title, { class: 'form-control' }) }}
+                        <span class="help-block">{{ _.find(old('errors'), { field: 'title' }).message }}</span>
+                    </div>
+                    <div class="form-group {{ 'has-error' if (_.find(old('errors'), { field: 'content' })) else '' }}">
+                        {{ form.label('content', 'Nội dung') }}
+                        {{ form.textarea('content', report.content, { class: 'form-control' }) }}
+                        <span class="help-block">{{ _.find(old('errors'), { field: 'content' }).message }}</span>
+                    </div>
+                    <div class="form-group no-margin {{ 'has-error' if (_.find(old('errors'), { field: 'driver_id' })) else '' }}">
+                        {{ form.label('driver_id', 'Tài xế') }}
+                        {{ form.select('driver_id', {}, null, 'Chọn tài xế', { class: 'form-control select2-ajax' }) }}
+                        <span class="help-block" style="margin-bottom: 0;">{{ _.find(old('errors'), { field: 'driver_id' }).message }}</span>
+                    </div>
+                    <hr style="margin: 10px 0" />
+                    <div class="form-group {{ 'has-error' if (_.find(old('errors'), { field: 'customer_name' })) else '' }}">
+                        {{ form.label('customer_name', 'Tên khách hàng') }}
+                        {{ form.text('customer_name', report.customer_name, { class: 'form-control' }) }}
+                        <span class="help-block">{{ _.find(old('errors'), { field: 'customer_name' }).message }}</span>
+                    </div>
+                    <div class="form-group no-margin {{ 'has-error' if (_.find(old('errors'), { field: 'customer_phone' })) else '' }}">
+                        {{ form.label('customer_phone', 'Số điện thoại') }}
+                        {{ form.text('customer_phone', report.customer_phone, { class: 'form-control' }) }}
+                        <span class="help-block">{{ _.find(old('errors'), { field: 'customer_phone' }).message }}</span>
+                    </div>
+                </div>
+                <div class="box-footer">
+                    {{ form.resetButton('Làm lại', 'reset', { class: 'btn btn-default btn-flat' }) }}
+                    {{ form.submit('Cập nhật', 'submit', { class: 'btn btn-primary btn-flat pull-right' }) }}
+                </div>
+                {{ form.close() }}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+$(function() {
+    var remoteDataConfig = {
+        minimumInputLength: 3,
+        ajax: {
+            url: '{{ 'ReportController.drivers' | action }}',
+            dataType: 'json',
+            data: function(term, page) {
+                return term;
+            },
+            processResults: function(data, page) {
+                return {
+                    results: $.map(data, function (item) {
+                        return {
+                            text: item.first_name,
+                            id: item.id
+                        }
+                    })
+                };
+            }
+        },
+        initSelection : function (element, callback) {
+            callback({
+                text: "{{ report.driver.first_name }}",
+                id: "{{ report.driver.id }}"
+            });
+        }
+    };
+    $(".select2-ajax").select2(remoteDataConfig);
+});
+</script>
+{% endblock %}
