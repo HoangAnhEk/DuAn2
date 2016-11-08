@@ -1,0 +1,32 @@
+<ion-header>
+	<ion-navbar color="primary">
+		<ion-title>Đăng Nhập</ion-title>
+		<ion-buttons end>
+			<button ion-button (click)="toRegister()">
+				Đăng ký
+			</button>
+		</ion-buttons>
+	</ion-navbar>
+</ion-header>
+
+<ion-content>
+	<form (ngSubmit)="onSubmit()" [formGroup]="form">
+		<ion-list>
+			<ion-item>
+				<ion-label stacked>Số điện thoại</ion-label>
+				<ion-input type="text" formControlName="phone" placeholder="Nhập số điện thoại"></ion-input>
+			</ion-item>
+			<ion-item>
+				<ion-label stacked>Mật khẩu</ion-label>
+				<ion-input type="password" formControlName="password" placeholder="Nhập mật khẩu"></ion-input>
+			</ion-item>
+			<ion-item>
+				<ion-label>Ghi nhớ tài khoản</ion-label>
+				<ion-checkbox color="dark"></ion-checkbox>
+			</ion-item>
+		</ion-list>
+		<div padding-left padding-right>
+			<button ion-button block [disabled]="!form.valid">Đăng Nhập</button>
+		</div>
+	</form>
+</ion-content>

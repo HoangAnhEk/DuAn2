@@ -1,0 +1,24 @@
+<ion-header>
+	<ion-navbar color="primary">
+		<ion-title>Vận đơn</ion-title>
+		<ion-buttons end>
+			<button ion-button icon-only (click)="filterDialog()">
+                <ion-icon name="settings"></ion-icon>
+            </button>
+		</ion-buttons>
+	</ion-navbar>
+</ion-header>
+
+<ion-content>
+	<ion-list>
+		<a ion-item *ngFor="let item of orders">
+			<h2>Loại hàng: {{ item.category }}</h2>
+			<h4>Trọng tải xe: {{ item.weight }}</h4>
+			<p>
+				<ion-icon name="pin"></ion-icon>
+				{{ item.delivery_location }}
+			</p>
+			<ion-badge item-right [color]="getStatus(item.status).color">{{ getStatus(item.status).text }}</ion-badge>
+		</a>
+	</ion-list>
+</ion-content>

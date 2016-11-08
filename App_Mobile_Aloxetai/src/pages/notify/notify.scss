@@ -1,0 +1,15 @@
+page-notify {
+	ion-note {
+		font-size: 13px;
+		align-self: flex-start;
+		margin-top: 13px;
+		position: absolute;
+		right: 16px;
+		top: 0;
+	}
+
+	ion-label {
+		margin-top: 10px !important;
+		margin-bottom: 10px !important;
+	}
+}

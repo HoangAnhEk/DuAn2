@@ -1,0 +1,79 @@
+// http://ionicframework.com/docs/v2/theming/
+// App Global Sass
+// --------------------------------------------------
+// Put style rules here that you want to apply globally. These
+// styles are for the entire app and not just one component.
+// Additionally, this file can be also used as an entry point
+// to import other Sass files to be included in the output CSS.
+//
+// Shared Sass variables, which can be used to adjust Ionic's
+// default Sass variables, belong in "theme/variables.scss".
+//
+// To declare rules for a specific mode, create a child rule
+// for the .md, .ios, or .wp mode classes. The mode class is
+// automatically applied to the <body> element in the app.
+@font-face {
+	font-family: 'Source Sans Pro';
+	src: url('../assets/fonts/SourceSansPro-Regular.ttf');
+	font-weight: 400;
+}
+@font-face {
+	font-family: 'Source Sans Pro';
+	src: url('../assets/fonts/SourceSansPro-Semibold.ttf');
+	font-weight: 600;
+}
+@font-face {
+	font-family: 'Source Sans Pro';
+	src: url('../assets/fonts/SourceSansPro-Bold.ttf');
+	font-weight: 700;
+}
+
+ion-app {
+	font-family: 'Source Sans Pro', sans-serif !important;
+
+	ion-list {
+		margin-bottom: 0 !important;
+	}
+
+	.item-block {
+		min-height: 3.5rem;
+	}
+
+	.button {
+		font-size: 1.7rem !important;
+	}
+
+	.alert-input,
+	.text-input {
+		line-height: 2.5rem !important;
+	}
+
+	ion-select {
+		line-height: 2.5rem !important;
+
+		.select-text {
+			min-height: 2.5rem !important;
+		}
+	}
+
+	ion-alert {
+		.alert-tappable {
+			min-height: 3.5rem !important;
+		}
+	}
+
+	ion-list-header {
+		font-size: 1.5rem !important;
+		text-transform: uppercase !important;
+		min-height: 3rem;
+	}
+
+	ion-datetime {
+		padding-bottom: 0 !important;
+
+		.datetime-text {
+			min-height: 2.8rem !important;
+			line-height: 2.6rem !important;
+		}
+	}
+}

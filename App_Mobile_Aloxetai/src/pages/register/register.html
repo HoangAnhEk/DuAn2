@@ -1,0 +1,63 @@
+<ion-header>
+	<ion-navbar color="primary">
+		<ion-title>Đăng Ký</ion-title>
+	</ion-navbar>
+</ion-header>
+
+<ion-content>
+	<form (ngSubmit)="onSubmit()" [formGroup]="form">
+		<ion-list>
+			<ion-list-header color="header">
+				Thông tin cá nhân
+			</ion-list-header>
+			<ion-item>
+				<ion-label stacked>Họ và tên đệm</ion-label>
+				<ion-input type="text" formControlName="last_name" placeholder="Nhập họ và tên đệm"></ion-input>
+			</ion-item>
+			<ion-item>
+				<ion-label stacked>Tên</ion-label>
+				<ion-input type="text" formControlName="first_name" placeholder="Nhập tên"></ion-input>
+			</ion-item>
+			<ion-item>
+				<ion-label stacked>Ngày sinh</ion-label>
+				<ion-datetime displayFormat="DD/MM/YYYY" pickerFormat="DD/MM/YYYY" formControlName="birthday"></ion-datetime>
+			</ion-item>
+			<ion-item>
+				<ion-label stacked>Địa chỉ</ion-label>
+				<ion-input type="text" formControlName="address" placeholder="Nhập địa chỉ"></ion-input>
+			</ion-item>
+			<ion-item>
+				<ion-label stacked>Số chứng minh thư</ion-label>
+				<ion-input type="text" formControlName="identification" placeholder="Nhập số chứng minh thư"></ion-input>
+			</ion-item>
+			<ion-item>
+				<ion-label>Trọng tải xe</ion-label>
+				<ion-select formControlName="weight_id">
+					<ion-option *ngFor="let weight of weights" value="{{ weight.id }}" selected="false">{{ weight.name }}</ion-option>
+				</ion-select>
+			</ion-item>
+			<ion-item>
+				<ion-label stacked>Giấy phép lái xe</ion-label>
+				<ion-input type="text" formControlName="driving_license" placeholder="Nhập số giấy phép lái xe"></ion-input>
+			</ion-item>
+			<ion-item>
+				<ion-label stacked>Biển kiểm soát</ion-label>
+				<ion-input type="text" formControlName="license_plate" placeholder="Nhập biển kiểm xoát"></ion-input>
+			</ion-item>
+			<ion-list-header color="header">
+				Thông tin đăng nhập
+			</ion-list-header>
+			<ion-item>
+				<ion-label stacked>Số điện thoại</ion-label>
+				<ion-input type="text" formControlName="phone" placeholder="Nhập số điện thoại"></ion-input>
+			</ion-item>
+			<ion-item>
+				<ion-label stacked>Mật khẩu</ion-label>
+				<ion-input type="password" formControlName="password" placeholder="Nhập mật khẩu"></ion-input>
+			</ion-item>
+		</ion-list>
+		<div padding-left padding-right padding-bottom>
+			<button ion-button block [disabled]="!form.valid">Đăng Ký</button>
+		</div>
+	</form>
+</ion-content>

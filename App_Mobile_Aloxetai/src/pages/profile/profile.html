@@ -1,0 +1,37 @@
+<ion-header>
+	<ion-navbar color="danger">
+		<ion-title>
+			Cá nhân
+		</ion-title>
+		<ion-buttons end>
+			<button ion-button icon-only (click)="changePassDialog()">
+                <ion-icon name="key"></ion-icon>
+            </button>
+		</ion-buttons>
+	</ion-navbar>
+</ion-header>
+
+<ion-content>
+	<ion-list>
+		<div padding text-center>
+			<img src="/assets/img/avatar.png" class="avatar" />
+			<div>
+				<ion-badge color="secondary">{{ coin }} xu</ion-badge>
+			</div>
+		</div>
+		<ion-list-header color="header">
+			Cá nhân
+		</ion-list-header>
+		<ion-item *ngFor="let item of data">
+			{{ item.value }}
+			<ion-note item-right>{{ item.note }}</ion-note>
+		</ion-item>
+		<ion-list-header color="header">
+			Cài đặt
+		</ion-list-header>
+		<button ion-item (click)="doLogout()">
+			<ion-icon name="log-out" item-left></ion-icon>
+    		Đăng xuất
+  		</button>
+	</ion-list>
+</ion-content>

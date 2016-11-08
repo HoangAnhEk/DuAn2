@@ -1,0 +1,23 @@
+<ion-header>
+	<ion-navbar color="secondary">
+		<ion-title>
+			Thông Báo
+		</ion-title>
+	</ion-navbar>
+</ion-header>
+
+<ion-content>
+	<ion-list>
+		<a ion-item *ngFor="let item of notifications" (click)="onNotify(item)">
+			<h2>{{ item.title }}</h2>
+			<p>{{ item.message }}</p>
+			<ion-note>
+				<ion-icon name="time"></ion-icon>
+				{{ item.created_at }}
+			</ion-note>
+		</a>
+	</ion-list>
+	<ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+		<ion-infinite-scroll-content></ion-infinite-scroll-content>
+	</ion-infinite-scroll>
+</ion-content>
